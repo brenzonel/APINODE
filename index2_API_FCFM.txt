@@ -1,0 +1,62 @@
+import express from "express";
+import mysql from "mysql";
+
+const app = express()
+
+const db = mysql.createConnection({
+    host:"localhost",
+    user:"root",
+    password:"28Extencion..",
+    database:"test"
+});
+
+app.use(express.json()); //Para poder usar el body en el request de postman
+
+app.get("/", (req, res) => {
+    res.json("Holo, este es parte del backend")
+});
+
+app.get("/books", (req, res) => {
+    const q = "SELECT * FROM books";
+    const q2 = "SELECT * FROM users";
+    db.query(q2, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.json(err);
+      }
+      return res.json(data);
+    });
+  });
+
+  app.post("/books", (req, res) => {
+    const q = "INSERT INTO TEST.BOOKS (`Title`, `Desc`, `coverpic`) VALUES (?)"
+    const q2 = "INSERT INTO TEST.USERS (`Nombre`, `pwd`, `email`, `status`) VALUES (?)"
+    /*const values = [
+        "Titulo desde backend",
+        "Descripcion desde backend",
+        "Imagen desde backend"
+    ];*/
+
+    const values = [
+        req.body.Title,
+        req.body.Desc,
+        req.body.coverpic,
+    ];
+
+    const values2 = [
+        req.body.Nombre,
+        req.body.pwd,
+        req.body.email,
+        req.body.status,
+    ];
+
+    db.query(q2, [values2], (err, data) => {
+        if (err) return res.send(err);
+        //return res.json("Libro cargado exitosamente");
+        return res.json("Usuario cargado exitosamente");
+      });
+});
+
+app.listen(8800, () => {
+    console.log("Connected to backend");
+});

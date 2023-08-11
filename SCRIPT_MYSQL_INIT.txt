@@ -1,0 +1,30 @@
+SELECT * FROM TEST.BOOKS;
+
+INSERT INTO TEST.BOOKS VALUES (1, 'TEST TITLE', 'DESCRIPTION', 'COVER.png');
+
+CREATE TABLE `test`.`users` (
+  `iduser` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(50) NOT NULL,
+  `pwd` VARCHAR(200) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `status` boolean NOT NULL,
+  `imagen` VARCHAR(45) NULL,
+  PRIMARY KEY (`iduser`));
+  
+SELECT * FROM TEST.USERS;
+
+INSERT INTO TEST.USERS VALUES (1, 'BRANDON', '12345..', 'bran@gmail.com', true, '');
+INSERT INTO TEST.USERS VALUES (2, 'Brenzon', '12345..', 'bren@gmail.com', true, '');
+INSERT INTO TEST.USERS VALUES (3, 'Alan', '12345..', 'alan@gmail.com', true, '');
+
+Update test.users set status = false
+where iduser = 3;
+rollback;
+use test;
+select * from photo_test;
+select * from users;
+SELECT A.iduser, A.Nombre, A.email, A.status, b.photo 
+FROM TEST.USERS A
+LEFT JOIN TEST.PHOTO_TEST B 
+ON A.NOMBRE = B.NAME
+;
