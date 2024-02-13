@@ -61,6 +61,16 @@ app.delete("/users/:id", (req, res) => {
   })
 });
 
+app.get("/users/:id", (req, res) => {
+  const userId = req.params.id;
+  const q = "SELECT * FROM TEST.USERS WHERE iduser = ?"
+
+  db.query(q, [userId], (err,data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  })
+});
+
 app.put("/users/:id", (req, res) => {
   const bookId = req.params.id;
   const q = "UPDATE TEST.USERS SET `Nombre`= ?, `pwd`= ?, `imagen`= ? WHERE iduser = ?";
